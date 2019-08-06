@@ -17,10 +17,12 @@ const Tile = props => {
 const styles = StyleSheet.create({
   tile: {
     flex: 1,
-    borderWidth: 1,
-    borderRadius: 6,
-    borderColor: 'white',
+    borderWidth: 3,
+    borderRadius: 5,
+    borderColor: 'purple',
+    backgroundColor: 'pink',
     alignItems: 'center',
+    margin: 1,
   },
 });
 

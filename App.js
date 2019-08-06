@@ -119,13 +119,12 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 8,
-    backgroundColor: 'green',
   },
   header: {
     flex: 1,
   },
   title: {
-    fontSize: 46,
+    fontSize: 48,
     fontWeight: '800',
     textAlign: 'center',
     color: 'white',

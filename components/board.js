@@ -15,8 +15,6 @@ const Board = props => {
 const styles = StyleSheet.create({
   board: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: 'white',
   },
 });
 
