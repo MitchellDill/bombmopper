@@ -90,6 +90,10 @@ class App extends Component {
       this.sweepSurroundingTiles(tileId);
     }
     clearedTiles.push(tileId);
+    for (let i = 0; i < this.state.boardSize; i++) {
+      // if () {
+      // }
+    }
   }
 
   loseGame() {
