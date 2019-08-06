@@ -6,9 +6,23 @@ const Tile = props => {
   return (
     <View style={styles.tile}>
       {props.bomb ? (
-        <Button title={'\u2728'} color="gold" />
+        <Button
+          title={'\u2728'}
+          color="gold"
+          onPress={() => {
+            props.click(props.identifier);
+          }}
+          accessibilityLabel="mine!"
+        />
       ) : (
-        <Button title={'\u2B50'} color="gold" />
+        <Button
+          title={'\u2B50'}
+          color="gold"
+          onPress={() => {
+            props.click(props.identifier);
+          }}
+          accessibilityLabel="safe!"
+        />
       )}
     </View>
   );

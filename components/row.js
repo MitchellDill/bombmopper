@@ -6,7 +6,15 @@ const Row = props => {
   return (
     <View style={styles.row}>
       {props.bombs.map((tile, i) => {
-        return <Tile bomb={tile} key={`row${props.row}tile${i}`} />;
+        return (
+          <Tile
+            bomb={tile}
+            click={props.click}
+            flag={props.flag}
+            identifier={[props.row, i]}
+            key={`row${props.row}tile${i}`}
+          />
+        );
       })}
     </View>
   );
