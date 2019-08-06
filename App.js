@@ -22,17 +22,62 @@ class App extends Component {
     super(props);
     this.state = {
       boardSize: 8,
-      totalBombs: 10,
+      totalBombs: 8,
       bombsRemaining: 0,
       gameOver: false,
       boardLayout: [],
+      flaggedCoordinates: [],
+      clearedCoordinates: [],
     };
+    this.disperseBombs = this.disperseBombs.bind(this);
+    this.createBoard = this.createBoard.bind(this);
+  }
+
+  createBoard(board) {
+    this.setState({
+      boardLayout: board,
+    });
+  }
+
+  disperseBombs(width, height, bombs) {
+    let bombStore = bombs;
+    let board = [];
+    for (let i = 0; i < height; i++) {
+      let bombsInRow = 0;
+      let row = new Array(width).fill(null).map(tile => {
+        if (
+          Math.random() * bombStore > bombStore / 1.25 + bombsInRow &&
+          bombStore
+        ) {
+          bombStore--;
+          bombsInRow++;
+          return true;
+        } else if (
+          i === height - 1 &&
+          Math.random() * bombStore > bombStore / 1.5 &&
+          bombStore
+        ) {
+          bombStore--;
+          bombsInRow++;
+          return true;
+        } else if (Math.ceil(Math.random() * bombStore >= bombStore - 1)) {
+          return false;
+        } else {
+          return false;
+        }
+      });
+      board.push(row);
+    }
+    console.log(board, bombStore);
+    this.createBoard(board);
   }
 
   componentDidMount() {
-    this.setState({
-      boardLayout: [[]],
-    });
+    this.disperseBombs(
+      this.state.boardSize,
+      this.state.boardSize,
+      this.state.totalBombs,
+    );
   }
 
   render() {
@@ -44,7 +89,7 @@ class App extends Component {
             <Text style={styles.title}>BOMBMOPPER</Text>
           </View>
           <View style={styles.body}>
-            <Board size={this.state.boardSize} bomb={this.state.totalBombs} />
+            <Board size={this.state.boardSize} board={this.state.boardLayout} />
           </View>
         </SafeAreaView>
       </Fragment>
@@ -70,6 +115,7 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
+    backgroundColor: 'black',
   },
   body: {
     flex: 8,
@@ -79,9 +125,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 44,
-    fontWeight: '600',
+    fontSize: 46,
+    fontWeight: '800',
     textAlign: 'center',
+    color: 'white',
   },
 });
 

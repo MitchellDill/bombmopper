@@ -5,8 +5,8 @@ import Row from './row.js';
 const Board = props => {
   return (
     <View style={styles.board}>
-      {[...Array(props.size).keys()].map((row, i) => {
-        return <Row size={props.size} key={`row${i}`} />;
+      {props.board.map((row, i) => {
+        return <Row bombs={row} size={props.size} key={`row${i}`} row={i} />;
       })}
     </View>
   );
@@ -15,7 +15,7 @@ const Board = props => {
 const styles = StyleSheet.create({
   board: {
     flex: 1,
-    borderWidth: 6,
+    borderWidth: 2,
     borderColor: 'white',
   },
 });
