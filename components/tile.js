@@ -5,7 +5,7 @@ const Tile = props => {
   console.log('tile says hello');
   return (
     <View style={styles.tile}>
-      <Button title="B" color="gold" />
+      <Button title={'\u2728'} color="gold" />
     </View>
   );
 };
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   tile: {
     flex: 1,
     borderWidth: 3,
+    borderRadius: 5,
     borderColor: 'white',
   },
 });

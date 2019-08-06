@@ -15,7 +15,6 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import Tile from './components/tile.js';
 import Board from './components/board.js';
 
 class App extends Component {
@@ -26,8 +25,16 @@ class App extends Component {
       totalBombs: 10,
       bombsRemaining: 0,
       gameOver: false,
+      boardLayout: [],
     };
   }
+
+  componentDidMount() {
+    this.setState({
+      boardLayout: [[]],
+    });
+  }
+
   render() {
     return (
       <Fragment>

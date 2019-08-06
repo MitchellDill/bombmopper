@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Text, Fragment } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Row from './row.js';
 
 const Board = props => {
-  console.log('board says hello');
   return (
     <View style={styles.board}>
       {[...Array(props.size).keys()].map((row, i) => {
