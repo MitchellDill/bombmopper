@@ -15,12 +15,15 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import Tile from './components/tile.js';
+import Board from './components/board.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boardSize: 10,
+      boardSize: new Array(10),
+      totalBombs: 10,
       bombsRemaining: 0,
       gameOver: false,
     };
@@ -29,9 +32,12 @@ class App extends Component {
     return (
       <Fragment>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <View>
+        <SafeAreaView style={styles.screen}>
+          <View style={styles.header}>
             <Text style={styles.title}>BOMBMOPPER</Text>
+          </View>
+          <View style={styles.body}>
+            <Board size={this.state.boardSize} bomb={this.state.totalBombs} />
           </View>
         </SafeAreaView>
       </Fragment>
@@ -41,6 +47,7 @@ class App extends Component {
 
 /*
 create board - bomb count, board size (square)
+-determine where bombs go
 
 sweep - determine touch spot, read state of every surrounding button
 
@@ -54,11 +61,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  screen: {
+    flex: 1,
+  },
   body: {
-    backgroundColor: 'crimson',
+    flex: 8,
+    backgroundColor: 'green',
+  },
+  header: {
+    flex: 1,
   },
   title: {
-    fontSize: 32,
+    fontSize: 44,
     fontWeight: '600',
     textAlign: 'center',
   },
