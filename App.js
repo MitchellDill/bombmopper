@@ -99,35 +99,33 @@ class App extends Component {
   loseGame() {
     this.setState({
       gameOver: true,
-      message: 'KABOOM YOU LOSE',
+      message: 'KABOOM',
     });
   }
 
   disperseBombs(width, height, bombs) {
     let bombStore = bombs;
+    let bombCoordinates = [];
     let board = [];
+
+    while (bombStore > 0) {
+      let bombSpot = [
+        Math.round(Math.random() * height),
+        Math.round(Math.random() * width),
+      ];
+      bombCoordinates.push(bombSpot);
+      bombStore--;
+    }
     for (let i = 0; i < height; i++) {
-      let bombsInRow = 0;
-      let row = new Array(width).fill(null).map(tile => {
+      let row = new Array(width).fill(null).map((tile, j) => {
         if (
-          Math.random() * bombStore > bombStore / 1.25 + bombsInRow &&
-          bombStore
+          bombCoordinates.some(spots => {
+            return spots[0] === i && spots[1] === j;
+          })
         ) {
-          bombStore--;
-          bombsInRow++;
-          return true;
-        } else if (
-          i === height - 1 &&
-          Math.random() * bombStore > bombStore / 1.5 &&
-          bombStore
-        ) {
-          bombStore--;
-          bombsInRow++;
-          return true;
-        } else if (Math.ceil(Math.random() * bombStore >= bombStore - 1)) {
-          return false;
+          return (tile = true);
         } else {
-          return false;
+          return (tile = false);
         }
       });
       board.push(row);
@@ -164,17 +162,6 @@ class App extends Component {
     );
   }
 }
-
-/*
-create board - bomb count, board size (square)
--determine where bombs go
-
-sweep - determine touch spot, read state of every surrounding button
-
-each button component will have prop of isBomb, bombsSurrounding, flagged, swept (bool)
-
-
-*/
 
 const styles = StyleSheet.create({
   engine: {
