@@ -22,7 +22,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boardSize: new Array(10),
+      boardSize: 8,
       totalBombs: 10,
       bombsRemaining: 0,
       gameOver: false,

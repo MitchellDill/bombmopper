@@ -6,8 +6,8 @@ const Row = props => {
   console.log('row says hello');
   return (
     <View style={styles.row}>
-      {props.size.map(row => {
-        return <Tile />;
+      {[...Array(props.size).keys()].map((row, i) => {
+        return <Tile key={`row${row}tile${i}`} />;
       })}
     </View>
   );
@@ -17,8 +17,9 @@ const styles = StyleSheet.create({
   row: {
     flex: 1,
     flexDirection: 'row',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
+    color: 'yellow',
   },
 });
 
