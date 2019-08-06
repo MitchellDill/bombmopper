@@ -9,6 +9,8 @@ const Row = props => {
         return (
           <Tile
             bomb={tile}
+            number={props.numbers[i]}
+            cleared={props.cleared}
             click={props.click}
             flag={props.flag}
             identifier={[props.row, i]}

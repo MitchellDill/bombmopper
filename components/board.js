@@ -9,6 +9,8 @@ const Board = props => {
         return (
           <Row
             bombs={row}
+            numbers={props.numbers[i]}
+            cleared={props.cleared}
             size={props.size}
             click={props.click}
             flag={props.flag}

@@ -57,11 +57,7 @@ class App extends Component {
     console.log(tileId);
     let row = tileId[0];
     let column = tileId[1];
-    let updatedClearings = [].concat(this.state.clearedCoordinates);
-    updatedClearings.push(tileId);
-    this.setState({
-      clearedCoordinates: updatedClearings,
-    });
+    this.sweepSurroundingTiles(tileId);
     this.state.boardLayout[row][column] ? this.loseGame() : null;
   }
 
@@ -72,28 +68,32 @@ class App extends Component {
   sweepSurroundingTiles(tileId) {
     let row = tileId[0];
     let column = tileId[1];
-    this.clearTile(row - 1, column);
-    this.clearTile(row - 1, column - 1);
-    this.clearTile(row, column - 1);
-    this.clearTile(row, column + 1);
-    this.clearTile(row + 1, column);
-    this.clearTile(row + 1, column + 1);
-    this.clearTile(row - 1, column + 1);
-    this.clearTile(row + 1, column - 1);
+    this.clearTile(row, column);
+    // this.clearTile(row - 1, column);
+    // this.clearTile(row - 1, column - 1);
+    // this.clearTile(row, column - 1);
+    // this.clearTile(row, column + 1);
+    // this.clearTile(row + 1, column);
+    // this.clearTile(row + 1, column + 1);
+    // this.clearTile(row - 1, column + 1);
+    // this.clearTile(row + 1, column - 1);
   }
 
-  clearTile(tileId) {
-    let row = tileId[0];
-    let column = tileId[1];
-    let clearedTiles = [];
-    if (!this.state.boardLayout[row][column]) {
-      this.sweepSurroundingTiles(tileId);
+  clearTile(row, column) {
+    let clearedTiles = [].concat(this.state.clearedCoordinates);
+    clearedTiles.push([row, column]);
+    if (this.state.boardLayout[row]) {
+      if (
+        clearedTiles.some(cleared => {
+          return cleared[0] !== row && cleared[1] !== column;
+        })
+      ) {
+        // this.sweepSurroundingTiles([row, column]);
+      }
     }
-    clearedTiles.push(tileId);
-    for (let i = 0; i < this.state.boardSize; i++) {
-      // if () {
-      // }
-    }
+    this.setState({
+      clearedCoordinates: clearedTiles,
+    });
   }
 
   loseGame() {
@@ -153,6 +153,8 @@ class App extends Component {
             <Board
               size={this.state.boardSize}
               board={this.state.boardLayout}
+              numbers={this.state.numberLayout}
+              cleared={this.state.clearedCoordinates}
               click={this.clickTile}
               flag={this.flagTile}
             />

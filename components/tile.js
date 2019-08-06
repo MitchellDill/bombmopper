@@ -5,7 +5,21 @@ const Tile = props => {
   console.log('tile says hello');
   return (
     <View style={styles.tile}>
-      {props.bomb ? (
+      {props.cleared.some(clearedTiles => {
+        return (
+          clearedTiles[0] === props.identifier[0] &&
+          clearedTiles[1] === props.identifier[1]
+        );
+      }) ? (
+        <Button
+          title={props.number.toString()}
+          color="black"
+          onPress={() => {
+            console.log('cleared already');
+          }}
+          accessibilityLabel={`${props.number} nearby`}
+        />
+      ) : props.bomb ? (
         <Button
           title={'\u2728'}
           color="gold"
