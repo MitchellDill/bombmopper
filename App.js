@@ -35,6 +35,7 @@ class App extends Component {
     this.createBoard = this.createBoard.bind(this);
     this.clickTile = this.clickTile.bind(this);
     this.flagTile = this.flagTile.bind(this);
+    this.sweepMainTile = this.sweepMainTile.bind(this);
     this.sweepSurroundingTiles = this.sweepSurroundingTiles.bind(this);
     this.clearTile = this.clearTile.bind(this);
     this.loseGame = this.loseGame.bind(this);
@@ -57,7 +58,7 @@ class App extends Component {
     console.log(tileId);
     let row = tileId[0];
     let column = tileId[1];
-    this.sweepSurroundingTiles(tileId);
+    this.sweepMainTile(tileId);
     this.state.boardLayout[row][column] ? this.loseGame() : null;
   }
 
@@ -65,32 +66,96 @@ class App extends Component {
     console.log(e);
   }
 
-  sweepSurroundingTiles(tileId) {
+  sweepMainTile(tileId) {
     let row = tileId[0];
     let column = tileId[1];
     this.clearTile(row, column);
-    // this.clearTile(row - 1, column);
-    // this.clearTile(row - 1, column - 1);
-    // this.clearTile(row, column - 1);
-    // this.clearTile(row, column + 1);
-    // this.clearTile(row + 1, column);
-    // this.clearTile(row + 1, column + 1);
-    // this.clearTile(row - 1, column + 1);
-    // this.clearTile(row + 1, column - 1);
+    this.sweepSurroundingTiles(tileId);
+  }
+
+  sweepSurroundingTiles(tileId) {
+    let row = tileId[0];
+    let column = tileId[1];
+    let clearedTiles = [].concat(this.state.clearedCoordinates);
+
+    const clearTile = function(newRow, newCol) {
+      clearedTiles.push([newRow, newCol]);
+    };
+
+    if (this.state.boardLayout[row - 1]) {
+      if (!this.state.boardLayout[row - 1][column]) {
+        clearTile(row - 1, column);
+      }
+    }
+    if (
+      this.state.boardLayout[row - 1] &&
+      this.state.boardLayout[row][column - 1]
+    ) {
+      if (!this.state.boardLayout[row - 1][column - 1]) {
+        clearTile(row - 1, column - 1);
+      }
+    }
+    if (this.state.boardLayout[row][column - 1]) {
+      if (!this.state.boardLayout[row][column - 1]) {
+        clearTile(row, column - 1);
+      }
+    }
+    if (this.state.boardLayout[row][column + 1]) {
+      if (!this.state.boardLayout[row][column + 1]) {
+        clearTile(row, column + 1);
+      }
+    }
+    if (this.state.boardLayout[row + 1]) {
+      if (!this.state.boardLayout[row + 1][column]) {
+        clearTile(row + 1, column);
+      }
+    }
+    if (
+      this.state.boardLayout[row + 1] &&
+      this.state.boardLayout[row][column + 1]
+    ) {
+      if (!this.state.boardLayout[row + 1][column + 1]) {
+        clearTile(row + 1, column + 1);
+      }
+    }
+    if (
+      this.state.boardLayout[row - 1] &&
+      this.state.boardLayout[row][column + 1]
+    ) {
+      if (!this.state.boardLayout[row - 1][column + 1]) {
+        clearTile(row - 1, column + 1);
+      }
+    }
+    if (
+      this.state.boardLayout[row + 1] &&
+      this.state.boardLayout[row][column - 1]
+    ) {
+      if (!this.state.boardLayout[row + 1][column - 1]) {
+        clearTile(row + 1, column - 1);
+      }
+    }
+
+    this.setState({
+      clearedCoordinates: clearedTiles,
+    });
   }
 
   clearTile(row, column) {
+    console.log(row, column);
+    console.log(this.state.boardLayout[row][column]);
     let clearedTiles = [].concat(this.state.clearedCoordinates);
     clearedTiles.push([row, column]);
-    if (this.state.boardLayout[row]) {
-      if (
-        clearedTiles.some(cleared => {
-          return cleared[0] !== row && cleared[1] !== column;
-        })
-      ) {
-        // this.sweepSurroundingTiles([row, column]);
-      }
-    }
+    // if (this.state.boardLayout[row]) {
+    //   let clear;
+    //   if (
+    //     (clear = clearedTiles.some(cleared => {
+    //       return cleared[0] !== row && cleared[1] !== column;
+    //     }))
+    //   ) {
+    //     console.log(clear);
+    //     // this.sweepSurroundingTiles([row, column]);
+    //   }
+    // }
     this.setState({
       clearedCoordinates: clearedTiles,
     });
